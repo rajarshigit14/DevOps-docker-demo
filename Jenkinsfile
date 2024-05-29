@@ -32,7 +32,8 @@ pipeline {
             steps {
                 script {
                     //kubernetesDeploy configs: 'deploymentsvc.yaml', kubeconfigId: 'kubernetes_config'
-                    kubernetesDeploy configs: '', kubeConfig: [path: ''], kubeconfigId: 'kubernetes_config', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                    //kubernetesDeploy configs: '', kubeConfig: [path: ''], kubeconfigId: 'kubernetes_config', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                    kubernetesDeploy configs: '', kubeConfig: [path: ''], kubeconfigId: 'my_kubernetes', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
                 }
             }
         }
