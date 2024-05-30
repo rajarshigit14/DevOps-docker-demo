@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-          SSH_HOST = 'ubuntu@172.17.0.1'
+          SSH_HOST = 'docker@172.17.0.1'
       }
     stages {
         stage('Checkout GitHub repo') {
