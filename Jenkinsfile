@@ -32,7 +32,7 @@ pipeline {
         
         stage('Deploy to Kubernetes'){
               steps {
-                  sshagent(['SSH-credentials']) {
+                  sshagent(['k8-connect-ssh-credentia']) {
                       // Inside this block, you have SSH authentication set up
 
                       // Check if deployment already exists
