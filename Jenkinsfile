@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-          SSH_HOST = 'ubuntu@172.17.0.1'
+          SSH_HOST = 'ubuntu@127.0.0.1'
       }
     stages {
         stage('Checkout GitHub repo') {
@@ -37,30 +37,30 @@ pipeline {
 
                       // Check if deployment already exists
                       script {
-                          def deploymentExists = sh(script: "ssh ${env.SSH_HOST} 'kubectl get deployment cicd-learning --no-headers --ignore-not-found'", returnStatus: true) == 0
+                          def deploymentExists = sh(script: "ssh -p 2244 ${env.SSH_HOST} 'kubectl get deployment cicd-learning --no-headers --ignore-not-found'", returnStatus: true) == 0
 
                           // If deployment exists, delete it
                           if (deploymentExists) {
-                              sh "ssh ${env.SSH_HOST} 'kubectl delete deployment cicd-learning'"
+                              sh "ssh -p 2244 ${env.SSH_HOST} 'kubectl delete deployment cicd-learning'"
                           }
                       }
 
                       // Deploy Kubernetes manifest
-                      sh "ssh ${env.SSH_HOST} 'kubectl create deployment cicd-learning --image=docker.io/sauvikdevops/learning:latest'"
+                      sh "ssh -p 2244 ${env.SSH_HOST} 'kubectl create deployment cicd-learning --image=docker.io/sauvikdevops/learning:latest'"
 
                       // Check if service already exists
                       script {
-                          def serviceExists = sh(script: "ssh ${env.SSH_HOST} 'kubectl get service cicd-learning --no-headers --ignore-not-found'", returnStatus: true) == 0
+                          def serviceExists = sh(script: "ssh -p 2244 ${env.SSH_HOST} 'kubectl get service cicd-learning --no-headers --ignore-not-found'", returnStatus: true) == 0
 
                           // If service doesn't exist, expose it
                           if (!serviceExists) {
-                              sh "ssh ${env.SSH_HOST} 'kubectl expose deployment cicd-learning --type=NodePort --port=8090'"
+                              sh "ssh -p 2244 ${env.SSH_HOST} 'kubectl expose deployment cicd-learning --type=NodePort --port=8090'"
                           }
                       }
 
                       // Access the app and get the URL
                           script {
-                              def serviceUrl = sh(script: "ssh ${env.SSH_HOST} 'minikube service cicd-learning --url'", returnStdout: true).trim()
+                              def serviceUrl = sh(script: "ssh -p 2244 ${env.SSH_HOST} 'minikube service cicd-learning --url'", returnStdout: true).trim()
 
                       // Print the URL to Jenkins build logs
                               echo "Application URL: ${serviceUrl}"
