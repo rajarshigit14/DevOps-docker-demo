@@ -37,7 +37,7 @@ pipeline {
 
                       // Check if deployment already exists
                       script {
-                          def deploymentExists = sh(script: "ssh ${env.SSH_HOST} 'kubectl get deployment hello-minikube --no-headers --ignore-not-found'", returnStatus: true) == 0
+                          def deploymentExists = sh(script: "ssh ${env.SSH_HOST} 'kubectl get deployment cicd-learning --no-headers --ignore-not-found'", returnStatus: true) == 0
 
                           // If deployment exists, delete it
                           if (deploymentExists) {
