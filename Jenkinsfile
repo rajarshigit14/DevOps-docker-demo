@@ -41,26 +41,26 @@ pipeline {
 
                           // If deployment exists, delete it
                           if (deploymentExists) {
-                              sh "ssh ${env.SSH_HOST} 'kubectl delete deployment hello-minikube'"
+                              sh "ssh ${env.SSH_HOST} 'kubectl delete deployment cicd-learning'"
                           }
                       }
 
                       // Deploy Kubernetes manifest
-                      sh "ssh ${env.SSH_HOST} 'kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10'"
+                      sh "ssh ${env.SSH_HOST} 'kubectl create deployment cicd-learning --image=docker.io/sauvikdevops/learning:latest'"
 
                       // Check if service already exists
                       script {
-                          def serviceExists = sh(script: "ssh ${env.SSH_HOST} 'kubectl get service hello-minikube --no-headers --ignore-not-found'", returnStatus: true) == 0
+                          def serviceExists = sh(script: "ssh ${env.SSH_HOST} 'kubectl get service cicd-learning --no-headers --ignore-not-found'", returnStatus: true) == 0
 
                           // If service doesn't exist, expose it
                           if (!serviceExists) {
-                              sh "ssh ${env.SSH_HOST} 'kubectl expose deployment hello-minikube --type=NodePort --port=8080'"
+                              sh "ssh ${env.SSH_HOST} 'kubectl expose deployment cicd-learning --type=NodePort --port=8090'"
                           }
                       }
 
                       // Access the app and get the URL
                           script {
-                              def serviceUrl = sh(script: "ssh ${env.SSH_HOST} 'minikube service hello-minikube --url'", returnStdout: true).trim()
+                              def serviceUrl = sh(script: "ssh ${env.SSH_HOST} 'minikube service cicd-learning --url'", returnStdout: true).trim()
 
                       // Print the URL to Jenkins build logs
                               echo "Application URL: ${serviceUrl}"
