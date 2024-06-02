@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy deployment and service file') {
             steps {
                 script {
-                    kubernetesDeploy configs: '', kubeconfigId: 'k8_auth'
+                    kubernetesDeploy configs: 'deploymentsvc.yaml', kubeconfigId: 'k8_auth'
                 }
             }
         } 
