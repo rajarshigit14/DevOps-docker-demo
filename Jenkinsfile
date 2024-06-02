@@ -1,3 +1,7 @@
+pipeline {
+   agent any
+
+    
     stages {
         stage('Checkout GitHub repo') {
             steps {
@@ -5,3 +9,4 @@
             }
         }
     }
+}
