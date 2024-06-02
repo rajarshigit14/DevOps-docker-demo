@@ -8,12 +8,5 @@ pipeline {
             }
         }
     }
-        stage('Build and Tag Docker Image') {
-            steps {
-                script {
-                    sh 'docker build . -t hellodocker'
-                    sh 'docker tag hellodocker sauvikdevops/learning'
-                }
-            }
-        }
+
 }
