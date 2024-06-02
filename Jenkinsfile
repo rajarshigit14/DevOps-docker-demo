@@ -8,7 +8,7 @@ pipeline {
             }
         }
     }
-         stage('Build and Tag Docker Image') {
+        stage('Build and Tag Docker Image') {
             steps {
                 script {
                     sh 'docker build . -t hellodocker'
