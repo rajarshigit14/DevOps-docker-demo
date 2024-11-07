@@ -4,14 +4,14 @@ pipeline {
     stages {
         stage('Checkout GitHub repo') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sauvikdevops/dockerdemo']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/rajarshigit14/DevOps-docker-demo']])
             }
         }
         stage('Build and Tag Docker Image') {
             steps {
                 script {
                     sh 'docker build . -t hellodocker'
-                    sh 'docker tag hellodocker sauvikdevops/learning'
+                    sh 'docker tag hellodocker rajarshisaha/learning'
                 }
             }
         }    
@@ -19,9 +19,9 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'docker_hub', variable: 'docker_hub')]) {
-                    sh 'docker login -u sauvik.devops@gmail.com -p ${docker_hub}'
+                    sh 'docker login -u rajarshi.saha.cse25@heritageit.edu.in -p ${docker_hub}'
 }
-                    sh 'docker push sauvikdevops/learning'
+                    sh 'docker push rajarshisaha/learning'
                 }
             }
         }
